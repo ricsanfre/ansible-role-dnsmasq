@@ -1,0 +1,54 @@
+---
+# tasks file for ricsanfre.dnsmasq
+
+# If dnsmasq_interface is not defined obtain it from gathered facts
+# variable: ansible_default_ipv4.interface
+- name: Set the dnsmasq_interface variable.
+  set_fact:
+    dnsmasq_interface: "{{ ansible_default_ipv4.interface }}"
+  when: dnsmasq_interface|length == 0
+
+# If dnsmasq_listen_addres is not defined obtain it from gathered facts
+# variable: ansible_[interface_name].ipv4.address
+- name: Set the dnsmasq listen address variable
+  set_fact:
+    dnsmasq_listen_address: "{{ vars['ansible_' + dnsmasq_interface].ipv4.address }}"
+  when: dnsmasq_listen_address|length == 0
+
+# Set config file name using dnsmasq_inteface
+- name: Set the dnsmasq config file path
+  set_fact:
+    dnsmasq_config_file_path: "{{ dnsmasq_conf_directory }}{{ dnsmasq_interface }}"
+
+- name: Debug Listen address
+  debug:
+    msg:
+      - "dnsmasq_interface: {{ dnsmasq_interface }}"
+      - "dnsmasq_listen_address: {{ dnsmasq_listen_address }}"
+      - "dnsmasq_config_file_path: {{ dnsmasq_config_file_path }}"
+    verbosity: 0
+
+- name: Ensure dnsmasq package is installed
+  package:
+    name: '{{ dnsmasq_package_list | list }}'
+    state: 'present'
+    update_cache: true
+  register: pkg_install_result
+  until: pkg_install_result is success
+
+
+- name: Ensure dnsmasq is running and enabled
+  service:
+    name: "{{ dnsmasq_service_name }}"
+    state: started
+    enabled: true
+
+- name: Dnsmasq configuration file
+  template:
+    src: "{{ dnsmasq_conf_template }}"
+    dest: "{{ dnsmasq_config_file_path }}"
+    owner: root
+    group: root
+    mode: 0644
+    backup: true
+  notify: Reload dnsmasq service

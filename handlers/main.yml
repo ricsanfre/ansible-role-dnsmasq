@@ -1,0 +1,6 @@
+---
+# handlers file for ricsanfre.dnsmasq
+- name: Reload dnsmasq service
+  systemd:
+    state: 'reloaded'
+    name: '{{ dnsmasq_service_name }}'
