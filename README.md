@@ -1,8 +1,7 @@
 Ansible Role: dnsmasq
 =========
 
-[![CI](https://github.com/ricsanfre/ansible-role-ntp/actions/workflows/ci.yml/badge.svg)](https://github.com/ricsanfre/ansible-role-ntp/actions/workflows/ci.yml)
-
+[![CI](https://github.com/ricsanfre/ansible-role-dnsmasq/actions/workflows/ci.yml/badge.svg)](https://github.com/ricsanfre/ansible-role-dnsmasq/actions/workflows/ci.yml)
 
 Install and configure lightweight DHCP and DNS server, dnsmasq, on Linux.
 
