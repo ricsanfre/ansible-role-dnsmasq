@@ -31,6 +31,27 @@ home_dns_servers:
   - 80.58.61.250
   - 80.58.61.254
 
-# Ethernet Switch
-eth_switch_mac: 94:a6:7e:7c:c7:69
-eth_switch_ip: 10.0.0.2
+# By default it is added to the configuration of the hosts within inventory
+# variables: ip, mac and hostname are needed in the inventory
+
+# Aditional DHCP configuration
+# Example:
+# additional_dhcp_hosts:
+#   ethernet_switch:
+#     desc: "Ethernet Switch"
+#     mac: 94:a6:7e:7c:c7:69
+#     ip: 10.0.0.2
+additional_dhcp_hosts: {}
+
+# Additional DNS configuration
+# Example
+# additional_dns_hosts:
+#   ntp_server:
+#     desc: "NTP Server"
+#     hostname: ntp
+#     ip: 10.0.0.1
+#   dns_server:
+#     desc: "DNS Server"
+#     hostname: dns
+#     ip: 10.0.0.1
+additional_dns_hosts: {}
