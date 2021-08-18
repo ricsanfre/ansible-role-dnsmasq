@@ -2,12 +2,12 @@
 - name: Converge
   hosts: instance
   vars:
-    - additional_dhcp_hosts:
+    - dnsmasq_additional_dhcp_hosts:
         ethernet_switch:
           desc: "Ethernet Switch"
           mac: 94:a6:7e:7c:c7:69
           ip: 10.0.0.2
-    - additional_dns_hosts:
+    - dnsmasq_additional_dns_hosts:
         ntp_server:
           desc: "NTP Server"
           hostname: ntp

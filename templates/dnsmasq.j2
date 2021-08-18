@@ -12,7 +12,7 @@ listen-address= {{ dnsmasq_listen_address }}
 dhcp-range={{ dnsmasq_dhcp_range }},12h
 
 # DNS nameservers
-{% for server in home_dns_servers %}
+{% for server in dnsmasq_upstream_dns_servers %}
 server={{ server }}
 {% endfor %}
 
@@ -44,7 +44,7 @@ dhcp-host={{ hostvars[host].mac }},{{ hostvars[host].ip }}
 {% endfor %}
 
 # Adding additional DHCP hosts
-{% for host in additional_dhcp_hosts.values() %}
+{% for host in dnsmasq_additional_dhcp_hosts.values() %}
 {% if host.desc is defined %}
 # {{ host.desc }}
 {% endif %}
@@ -61,7 +61,7 @@ host-record={{ hostvars[host].hostname }}.{{ dnsmasq_domain_name }},{{ hostvars[
 {% endfor %}
 
 # Adding additional DNS
-{% for host in additional_dns_hosts.values() %}
+{% for host in dnsmasq_additional_dns_hosts.values() %}
 {% if host.desc is defined %}
 # {{ host.desc }}
 {% endif %}

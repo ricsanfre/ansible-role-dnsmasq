@@ -28,9 +28,9 @@ Local domain name:
 ```yml
 dnsmasq_domain_name: example.ricsanfre.com
 ```
-DNS relay servers:
+DNS upstream servers (for relaying DNS queries):
 ```yml
-home_dns_servers:
+dnsmasq_upstream_dns_servers:
   - 80.58.61.250
   - 80.58.61.254
 ```
@@ -39,11 +39,8 @@ DHCP lease IP range:
 dnsmasq_dhcp_range: '10.0.0.32,10.0.0.128'
 ```
 
-Import DHCP/DNS configuration from inventory for group
-```yml
-host_groups: all
-```
-By default it is added to the DHCP and DNS configuration records from the hosts within inventory belonging to group `host_groups`
+
+By default it is added to the DHCP and DNS configuration records from the hosts within inventory (any host = `all` group)
 
 Variables: `ip`, `mac` and `hostname` need to be added to the hosts in the inventory:
 ```yml
@@ -68,20 +65,20 @@ hosts:
 Additional DHCP and DNS records can be added with the following variables:
 
 ```yml
-additional_dhcp_hosts: {}
+dnsmasq_additional_dhcp_hosts: {}
 ```
 ```yml
-additional_dhcp_hosts:
+dnsmasq_additional_dhcp_hosts:
   ethernet_switch:
     desc: "Ethernet Switch"
     mac: 94:a6:7e:7c:c7:69
     ip: 10.0.0.2
 ```
 ```yml
-additional_dns_hosts: {}
+dnsmasq_additional_dns_hosts: {}
 ```
 ```yml
-additional_dns_hosts:
+dnsmasq_additional_dns_hosts:
   ntp_server:
     desc: "NTP Server"
     hostname: ntp
