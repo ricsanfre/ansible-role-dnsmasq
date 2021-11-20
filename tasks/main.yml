@@ -36,13 +36,6 @@
   register: pkg_install_result
   until: pkg_install_result is success
 
-
-- name: Ensure dnsmasq is running and enabled
-  service:
-    name: "{{ dnsmasq_service_name }}"
-    state: started
-    enabled: true
-
 - name: Dnsmasq configuration file
   template:
     src: "{{ dnsmasq_conf_template }}"
@@ -52,3 +45,9 @@
     mode: 0644
     backup: true
   notify: Reload dnsmasq service
+
+- name: Ensure dnsmasq is running and enabled
+  service:
+    name: "{{ dnsmasq_service_name }}"
+    state: started
+    enabled: true
