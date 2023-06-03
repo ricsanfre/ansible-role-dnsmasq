@@ -28,6 +28,17 @@
       - "dnsmasq_config_file_path: {{ dnsmasq_config_file_path }}"
     verbosity: 0
 
+- name: Create TFT directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0750
+  with_items:
+    - "{{ dnsmasq_tftp_root }}"
+  when: dnsmasq_enable_tftp
+
 - name: Ensure dnsmasq package is installed
   package:
     name: '{{ dnsmasq_package_list | list }}'

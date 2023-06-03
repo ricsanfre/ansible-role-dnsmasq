@@ -16,5 +16,12 @@
           desc: "DNS Server"
           hostname: dns
           ip: 10.0.0.1
+    - dnsmasq_enable_tftp: true
+    - dnsmasq_tftp_root: /srv/tftp
+    - dnsmasq_additional_conf: |-
+        # Enabling Netboot
+        dhcp-boot=pxelinux.0
+        dhcp-match=set:efi-x86_64,option:client-arch,7
+        dhcp-boot=tag:efi-x86_64,bootx64.efi
   roles:
     - role: ricsanfre.dnsmasq

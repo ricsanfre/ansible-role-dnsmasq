@@ -52,3 +52,16 @@ dnsmasq_additional_dhcp_hosts: {}
 #     hostname: dns
 #     ip: 10.0.0.1
 dnsmasq_additional_dns_hosts: {}
+
+# enable tftp
+dnsmasq_enable_tftp: false
+dnsmasq_tftp_root: /srv/tftp
+
+# additional config
+dnsmasq_additional_conf: []
+# Exaple
+# dnsmasq_additional_conf: |-
+#        # Enabling Netboot
+#        dhcp-boot=pxelinux.0
+#        dhcp-match=set:efi-x86_64,option:client-arch,7
+#        dhcp-boot=tag:efi-x86_64,bootx64.efi

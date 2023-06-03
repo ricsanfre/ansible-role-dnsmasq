@@ -89,6 +89,28 @@ dnsmasq_additional_dns_hosts:
     ip: 10.0.0.1
 ```
 
+Enable TFTP service and specify TFTP root directory
+
+```yml
+dnsmasq_enable_tftp: false
+dnsmasq_tftp_root: /srv/tftp
+```
+
+Additional configuration can be specified, added at the end of the dnsmasq config file
+
+```yml
+dnsmasq_additional_conf: []
+```
+
+```yml
+dnsmasq_additional_conf: |-
+        # Enabling Netboot
+        dhcp-boot=pxelinux.0
+        dhcp-match=set:efi-x86_64,option:client-arch,7
+        dhcp-boot=tag:efi-x86_64,bootx64.efi
+```
+
+
 Dependencies
 ------------
 
