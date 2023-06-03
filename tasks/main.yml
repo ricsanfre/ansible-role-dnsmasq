@@ -34,7 +34,7 @@
     state: directory
     owner: root
     group: root
-    mode: 0750
+    mode: 0755
   with_items:
     - "{{ dnsmasq_tftp_root }}"
   when: dnsmasq_enable_tftp
