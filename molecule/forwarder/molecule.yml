@@ -1,0 +1,60 @@
+---
+dependency:
+  name: galaxy
+lint: |
+  set -e
+  yamllint .
+  ansible-lint
+driver:
+  name: docker
+platforms:
+  - name: instance
+    image: "ricsanfre/docker-${MOLECULE_DISTRO:-ubuntu}-ansible:${MOLECULE_RELEASE:-latest}"
+    command: ${MOLECULE_DOCKER_COMMAND:-""}
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    cgroupns_mode: host
+    tmpfs:
+      - /tmp
+      - /run
+      - /run/lock
+    privileged: true
+    pre_build_image: true
+    docker_networks:
+      - name: molecule_lan
+        ipam_config:
+          - subnet: "10.0.1.0/24"
+            gateway: "10.0.1.254"
+      - name: molecule_wan
+        ipam_config:
+          - subnet: "10.0.2.0/24"
+            gateway: "10.0.2.254"
+    networks:
+      - name: "molecule_lan"
+        ipv4_address: 10.0.1.1
+      - name: "molecule_wan"
+        ipv4_address: 10.0.2.1
+provisioner:
+  name: ansible
+  playbooks:
+    converge: ${MOLECULE_PLAYBOOK:-converge.yml}
+  inventory:
+    hosts:
+      all:
+        children:
+          cluster:
+            hosts:
+              server1:
+                hostname: server1
+                ip: 10.0.1.11
+                mac: dc:a6:32:9c:29:b9
+              server2:
+                hostname: server2
+                ip: 10.0.1.12
+                mac: e4:5f:01:2d:fd:19
+              server3:
+                hostname: server3
+                ip: 10.0.1.13
+                mac: e4:5f:01:2f:49:05
+verifier:
+  name: ansible

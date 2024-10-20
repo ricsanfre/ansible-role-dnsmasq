@@ -1,0 +1,19 @@
+---
+- name: Converge
+  hosts: instance
+  vars:
+    dnsmasq_discover_inventory: false
+    dnsmasq_domain_name: homelab.example.com
+    dnsmasq_upstream_dns_servers:
+      - /homelab.example.com/10.0.1.11
+      - 1.1.1.1
+      - 8.8.8.8
+    dnsmasq_enable_tftp: true
+    dnsmasq_tftp_root: /srv/tftp
+    dnsmasq_additional_conf: |-
+      # Enabling Netboot
+      dhcp-boot=pxelinux.0
+      dhcp-match=set:efi-x86_64,option:client-arch,7
+      dhcp-boot=tag:efi-x86_64,bootx64.efi
+  roles:
+    - role: ricsanfre.dnsmasq
