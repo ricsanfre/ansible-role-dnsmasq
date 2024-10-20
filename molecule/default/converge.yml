@@ -2,20 +2,21 @@
 - name: Converge
   hosts: instance
   vars:
+    - dnsmasq_discover_inventory: true
     - dnsmasq_additional_dhcp_hosts:
         ethernet_switch:
           desc: "Ethernet Switch"
           mac: 94:a6:7e:7c:c7:69
-          ip: 10.0.0.2
+          ip: 10.0.1.2
     - dnsmasq_additional_dns_hosts:
         ntp_server:
           desc: "NTP Server"
           hostname: ntp
-          ip: 10.0.0.1
+          ip: 10.0.1.1
         dns_server:
           desc: "DNS Server"
           hostname: dns
-          ip: 10.0.0.1
+          ip: 10.0.1.1
     - dnsmasq_enable_tftp: true
     - dnsmasq_tftp_root: /srv/tftp
     - dnsmasq_additional_conf: |-

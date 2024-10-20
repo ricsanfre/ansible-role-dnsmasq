@@ -28,6 +28,9 @@ dnsmasq_upstream_dns_servers:
   - 8.8.8.8
   - 8.8.8.4
 
+# Whether to add dns entry from ansible inventory
+dnsmasq_discover_inventory: false
+
 # By default it is added to the configuration of the hosts within inventory
 # variables: ip, mac and hostname are needed in the inventory
 

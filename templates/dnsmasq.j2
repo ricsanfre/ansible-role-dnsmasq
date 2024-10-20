@@ -36,15 +36,18 @@ bogus-priv
 # log-queries
 # log-dhcp
 
-{% for host in groups['all'] %}
+{% if dnsmasq_discover_inventory %}
 # DHCP configuration based on inventory
+{% for host in groups['all'] %}
 {% if hostvars[host].mac is defined and hostvars[host].ip is defined %}
 dhcp-host={{ hostvars[host].mac }},{{ hostvars[host].ip }}
 {% endif %}
 {% endfor %}
+{% endif %}
 
-{% for host in dnsmasq_additional_dhcp_hosts.values() %}
+{% if dnsmasq_additional_dhcp_hosts.values() %}
 # Adding additional DHCP hosts
+{% for host in dnsmasq_additional_dhcp_hosts.values() %}
 {% if host.desc is defined %}
 # {{ host.desc }}
 {% endif %}
@@ -52,18 +55,20 @@ dhcp-host={{ hostvars[host].mac }},{{ hostvars[host].ip }}
 dhcp-host={{ host.mac }},{{ host.ip }}
 {% endif %}
 {% endfor %}
+{% endif %}
 
-
-{% for host in groups['all'] %}
+{% if dnsmasq_discover_inventory %}
 # DNS configuration based on inventory
+{% for host in groups['all'] %}
 {% if hostvars[host].hostname is defined and hostvars[host].ip is defined %}
 host-record={{ hostvars[host].hostname }}.{{ dnsmasq_domain_name }},{{ hostvars[host].ip }}
 {% endif %}
 {% endfor %}
+{% endif %}
 
-
-{% for host in dnsmasq_additional_dns_hosts.values() %}
+{% if dnsmasq_additional_dns_hosts.values() %}
 # Adding additional DNS
+{% for host in dnsmasq_additional_dns_hosts.values() %}
 {% if host.desc is defined %}
 # {{ host.desc }}
 {% endif %}
@@ -71,7 +76,7 @@ host-record={{ hostvars[host].hostname }}.{{ dnsmasq_domain_name }},{{ hostvars[
 host-record={{ host.hostname }}.{{dnsmasq_domain_name }},{{ host.ip }}
 {% endif %}
 {% endfor %}
-
+{% endif %}
 
 {% if dnsmasq_enable_tftp is defined and dnsmasq_enable_tftp %}
 # Enable dnsmasq's built-in TFTP server

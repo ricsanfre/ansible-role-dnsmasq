@@ -39,8 +39,11 @@ DHCP lease IP range:
 dnsmasq_dhcp_range: '10.0.0.32,10.0.0.128'
 ```
 
-
-By default it is added to the DHCP and DNS configuration records from the hosts within inventory (any host = `all` group)
+Discovery DHCP and DNS
+```yml
+dnsmasq_dicover_inventory: true
+```
+If setting to true, DHCP and DNS records are added from the hosts within inventory (any host = `all` group)
 
 Variables: `ip`, `mac` and `hostname` need to be added to the hosts in the inventory:
 ```yml
@@ -62,6 +65,7 @@ hosts:
             ip: 10.0.0.13
             mac: e4:5f:01:2f:49:05
 ```
+
 Additional DHCP and DNS records can be added with the following variables:
 
 ```yml
